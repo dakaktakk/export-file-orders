@@ -1,11 +1,11 @@
 package org.example.app;
 
+import org.example.parser.ParserFactory;
 import org.example.reader.PropertiesReader;
+import org.example.services.DiscountService;
+import org.example.services.OrderProcessor;
 import org.example.storage.OrderFileReader;
 import org.example.storage.OrderFileWriter;
-import org.example.services.OrderProcessor;
-import org.example.parser.ParserFactory;
-import org.example.services.DiscountService;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,9 +22,7 @@ public class Main {
         OrderFileReader reader = new OrderFileReader(parserFactory);
         OrderFileWriter writer = new OrderFileWriter();
         DiscountService discountService = new DiscountService(props);
-
         OrderProcessor processor = new OrderProcessor(reader, writer, discountService);
-
         processor.process(writeFilePath);
     }
 }

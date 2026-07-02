@@ -26,6 +26,7 @@ public class DiscountService {
     }
 
     public BigDecimal calculateDiscountedPrice(BigDecimal weightKg) {
+
         BigDecimal weightUniKg = props.getBigDecimal("weight.uni.kg");
         BigDecimal pricePer50Kg = props.getBigDecimal("price.per.50kg");
 
