@@ -2,8 +2,6 @@ package org.example;
 
 import org.example.utils.ParsersUtils;
 import org.example.utils.discount.DiscountCalculator;
-
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
