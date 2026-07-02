@@ -1,7 +1,6 @@
 package org.example.parser;
 
 import org.example.entity.Order;
-import org.example.interfaces.OrderReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,16 +8,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.constants.Constants.CORRECT_AMOUNT_PARTS;
-import static org.example.constants.Constants.PIPE_DELIMITER;
-
 /**
  * Парсер файла без типа в счета разделитель "|"
+ *
  * @author Dmitriy Gromov
  * @since 02.07.2026
  */
 
 public class PipeDelimitedParser implements OrderReader {
+
+    private static final String PIPE_DELIMITER = "\\|";
+    private static final int CORRECT_AMOUNT_PARTS = 3;
 
     @Override
     public List<Order> read(BufferedReader bufferedReader) {

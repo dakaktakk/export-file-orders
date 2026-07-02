@@ -1,4 +1,4 @@
-package org.example.interfaces;
+package org.example.parser;
 
 import org.example.entity.Order;
 

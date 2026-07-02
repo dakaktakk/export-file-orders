@@ -5,18 +5,19 @@ import java.time.LocalDateTime;
 
 /**
  * Счёт
+ *
  * @author Dmitriy Gromov
  * @since 01.07.2026
  */
 
-public class Order implements Comparable<Order>  {
+public class Order implements Comparable<Order> {
 
     private final LocalDateTime created;
     private final String companyName;
     private final int weightKg;
     private BigDecimal orderDiscountPrice;
 
-    public Order (LocalDateTime created, String companyName, int weightKg) {
+    public Order(LocalDateTime created, String companyName, int weightKg) {
         this.created = created;
         this.companyName = companyName;
         this.weightKg = weightKg;
