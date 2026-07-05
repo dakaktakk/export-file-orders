@@ -1,9 +1,12 @@
 package org.example.services;
 
-import org.example.reader.PropertiesReader;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import static org.example.reader.PropertiesReader.CURRENT_DISCOUNT;
+import static org.example.reader.PropertiesReader.DISCOUNT_DECREASE_STEP;
+import static org.example.reader.PropertiesReader.PRICE_PER_50_KG;
+import static org.example.reader.PropertiesReader.WEIGHT_UNI_KG;
 
 /**
  * Расчёт счидки счёта
@@ -15,23 +18,12 @@ public class DiscountService {
 
     private static final int SCALE = 2;
     private static final BigDecimal MIN_DISCOUNT = new BigDecimal("0.0");
-    private final PropertiesReader props;
-    private BigDecimal currentDiscount;
-    private final BigDecimal discountDecreaseStep;
-
-    public DiscountService(PropertiesReader props) {
-        this.props = props;
-        this.currentDiscount = props.getBigDecimal("discount.initial");
-        this.discountDecreaseStep = props.getBigDecimal("discount.step");
-    }
+    private BigDecimal currentDiscount = CURRENT_DISCOUNT;
 
     public BigDecimal calculateDiscountedPrice(BigDecimal weightKg) {
 
-        BigDecimal weightUniKg = props.getBigDecimal("weight.uni.kg");
-        BigDecimal pricePer50Kg = props.getBigDecimal("price.per.50kg");
-
-        BigDecimal pricePerKg = pricePer50Kg
-                .divide(weightUniKg, SCALE, RoundingMode.HALF_UP);
+        BigDecimal pricePerKg = PRICE_PER_50_KG
+                .divide(WEIGHT_UNI_KG, SCALE, RoundingMode.HALF_UP);
 
         BigDecimal basePrice = pricePerKg
                 .multiply(weightKg);
@@ -51,11 +43,12 @@ public class DiscountService {
     }
 
     private void decreaseDiscount() {
-        BigDecimal newDiscount = currentDiscount.subtract(discountDecreaseStep);
+        BigDecimal newDiscount = currentDiscount.subtract(DISCOUNT_DECREASE_STEP);
         this.currentDiscount = newDiscount.max(MIN_DISCOUNT);
     }
 
     public void reset() {
-        this.currentDiscount = props.getBigDecimal("discount.initial");
+        this.currentDiscount = CURRENT_DISCOUNT;
     }
 }
+
