@@ -42,13 +42,13 @@ public class DiscountService {
         return finalPrice;
     }
 
+    public void reset() {
+        this.currentDiscount = CURRENT_DISCOUNT;
+    }
+
     private void decreaseDiscount() {
         BigDecimal newDiscount = currentDiscount.subtract(DISCOUNT_DECREASE_STEP);
         this.currentDiscount = newDiscount.max(MIN_DISCOUNT);
-    }
-
-    public void reset() {
-        this.currentDiscount = CURRENT_DISCOUNT;
     }
 }
 
