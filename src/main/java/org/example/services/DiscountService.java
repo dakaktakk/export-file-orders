@@ -20,6 +20,21 @@ public class DiscountService {
     private static final BigDecimal MIN_DISCOUNT = new BigDecimal("0.0");
     private BigDecimal currentDiscount = CURRENT_DISCOUNT;
 
+    /**
+     * Рассчитывает итоговую стоимость заказа с учётом текущей скидки.
+     *
+     * <p>Формула расчёта:
+     * <ol>
+     *   <li>Базовая цена = (цена за 50 кг / 50) × вес заказа</li>
+     *   <li>Итоговая цена = базовая цена × (1 - текущая скидка / 100)</li>
+     * </ol>
+     *
+     * <p><b>Побочный эффект:</b> после расчёта текущая скидка уменьшается на
+     * {@code DISCOUNT_DECREASE_STEP} процентных пунктов, но не ниже {@code 0.0}.
+     *
+     * @param weightKg вес заказа в килограммах; должен быть неотрицательным
+     * @return итоговая стоимость с округлением до {@value #SCALE} знаков после запятой
+     */
     public BigDecimal calculateDiscountedPrice(BigDecimal weightKg) {
 
         BigDecimal pricePerKg = PRICE_PER_50_KG
@@ -42,6 +57,12 @@ public class DiscountService {
         return finalPrice;
     }
 
+    /**
+     * Сбрасывает текущую скидку до начального значения {@code CURRENT_DISCOUNT}.
+     *
+     * <p>Должен вызываться перед началом обработки новой партии заказов,
+     * чтобы гарантировать корректные расчёты.
+     */
     public void reset() {
         this.currentDiscount = CURRENT_DISCOUNT;
     }

@@ -13,6 +13,20 @@ public record ParserFactory(Path path) {
     private static final String POINT_DELIMITER = ".";
     private static final String FILE_EXTENSION_TXT = ".txt";
 
+    /**
+     * Возвращает парсер, соответствующий формату файла.
+     *
+     * <p>Правила выбора:
+     * <ul>
+     *   <li>Файлы с расширением {@code .txt} — {@link PipeDelimitedParser}</li>
+     *   <li>Файлы без расширения (без точки в имени) — {@link HashDelimitedParser}</li>
+     * </ul>
+     *
+     * <p>Проверка расширения выполняется без учёта регистра.
+     *
+     * @return парсер для чтения файла
+     * @throws RuntimeException если формат файла не поддерживается
+     */
     public OrderReader getParser() {
 
         String fileName = path.getFileName().toString().toLowerCase();

@@ -23,6 +23,15 @@ public class OrderFileReader {
         this.parserFactory = parserFactory;
     }
 
+    /**
+     * Читает все заказы из файла.
+     *
+     * <p>Путь к файлу и формат определяются {@link ParserFactory}, переданной в конструктор.
+     *
+     * @return список заказов в порядке, заданном парсером; возвращается новая копия списка,
+     *         которую можно безопасно модифицировать
+     * @throws RuntimeException если файл не найден или произошла ошибка чтения
+     */
     public List<Order> read() {
         OrderReader orderReader = parserFactory.getParser();
 
